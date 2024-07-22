@@ -7,23 +7,36 @@ from eralchemy2 import render_er
 
 Base = declarative_base()
 
-class Person(Base):
-    __tablename__ = 'person'
-    # Here we define columns for the table person
-    # Notice that each column is also a normal Python instance attribute.
+class User(Base):
+    __tablename__ = 'user'
+   
     id = Column(Integer, primary_key=True)
-    name = Column(String(250), nullable=False)
+    userName = Column(String(250), nullable=False)
+    password = Column (String(250))
 
-class Address(Base):
-    __tablename__ = 'address'
-    # Here we define columns for the table address.
-    # Notice that each column is also a normal Python instance attribute.
-    id = Column(Integer, primary_key=True)
-    street_name = Column(String(250))
-    street_number = Column(String(250))
-    post_code = Column(String(250), nullable=False)
-    person_id = Column(Integer, ForeignKey('person.id'))
-    person = relationship(Person)
+class Characters(Base):
+    __tablename__ = 'characters'
+   
+    charId = Column(Integer, primary_key=True)
+    charName = Column(String(250))
+    charDescription = Column(String(2500))
+    charOrigin = Column(String(250))
+    
+class Planets(Base):
+    __tablename__ = 'planets'
+
+    planetId = Column (Integer, primary_key=True)
+    planetName = Column (String(250))
+    planetDescription = Column (String (2500))
+
+class Favourites(Base):
+    __tablename__ = 'favourites'
+
+    favId = Column(Integer, primary_key=True)
+    favUserID = Column (Integer, ForeignKey('user.id'))
+    favCharID = Column(Integer, ForeignKey('characters.id'))
+    favPlanetID = Column(Integer, ForeignKey('planets.id'))
+
 
     def to_dict(self):
         return {}
